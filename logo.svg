@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Earth Brown L Shape -->
+  <path d="M 40,0 H 120 A 40,40 0 0,1 160,40 V 300 A 40,40 0 0,0 200,340 H 460 A 40,40 0 0,1 500,380 V 460 A 40,40 0 0,1 460,500 H 40 A 40,40 0 0,1 0,460 V 40 A 40,40 0 0,1 40,0 Z" fill="#784500" />
+  
+  <!-- Green Shapes -->
+  <!-- Top-Left (Forest Green) -->
+  <rect x="178" y="0" width="200" height="130" rx="30" ry="30" fill="#387508" />
+  
+  <!-- Top-Right (Lime Green) -->
+  <rect x="396" y="0" width="104" height="130" rx="30" ry="30" fill="#7CB82B" />
+  
+  <!-- Middle-Left (Lime Green) -->
+  <rect x="178" y="148" width="104" height="174" rx="30" ry="30" fill="#7CB82B" />
+  
+  <!-- Middle-Right (Forest Green) -->
+  <rect x="300" y="148" width="200" height="174" rx="30" ry="30" fill="#387508" />
+</svg>
