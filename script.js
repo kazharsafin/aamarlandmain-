@@ -72,4 +72,86 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Login Modal Popup Logic
+    const loginModal = document.getElementById('login-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const passwordToggleBtn = document.getElementById('password-toggle-btn');
+    const passwordInput = document.getElementById('login-password');
+    const loginForm = document.getElementById('login-form');
+    
+    // Select all triggers (Log In, Start Investing, etc.)
+    const loginTriggers = document.querySelectorAll('.login-trigger');
+    
+    loginTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginModal) {
+                loginModal.classList.add('active');
+                // Premium UX: auto-focus the email field on open
+                setTimeout(() => {
+                    const emailInput = document.getElementById('login-email');
+                    if (emailInput) emailInput.focus();
+                }, 200);
+            }
+        });
+    });
+
+    const closeModal = () => {
+        if (loginModal) {
+            loginModal.classList.remove('active');
+        }
+    };
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeModal);
+    }
+
+    if (loginModal) {
+        loginModal.addEventListener('click', (e) => {
+            // Close modal only if clicking outside the card (on the backdrop overlay)
+            if (e.target === loginModal) {
+                closeModal();
+            }
+        });
+    }
+
+    // WCAG Accessibility: Close modal on pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && loginModal && loginModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    // Password Show/Hide Toggle
+    if (passwordToggleBtn && passwordInput) {
+        passwordToggleBtn.addEventListener('click', () => {
+            const currentType = passwordInput.getAttribute('type');
+            const newType = currentType === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', newType);
+            
+            const icon = passwordToggleBtn.querySelector('i');
+            if (icon) {
+                if (newType === 'text') {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        });
+    }
+
+    // Mock Login Form Submission
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            alert(`Welcome back to Aamar Land! Signed in successfully as: ${email}`);
+            closeModal();
+            loginForm.reset();
+        });
+    }
 });
+
