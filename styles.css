@@ -1619,3 +1619,13 @@ input[type="number"]:focus, select:focus {
     }
 }
 
+/* WhatsApp Floating Action Button Styles */
+.floating-btn.whatsapp-btn {
+    background-color: #25D366;
+}
+
+.floating-btn.whatsapp-btn:hover {
+    background-color: #20ba5a;
+}
+
+
