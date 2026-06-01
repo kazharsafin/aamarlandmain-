@@ -60,6 +60,9 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "wr9rvnvmty");
     </script>
+    
+    <!-- Supabase JS Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -222,5 +225,81 @@
     </div>
     
     <script src="script.js"></script>
+    <script>
+      // 1. Initialize the Supabase Client
+      const supabaseUrl = 'https://your-project-id.supabase.co';
+      const supabaseKey = 'your-anon-key';
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+      const messageEl = document.getElementById('auth-message');
+
+      // 2. Email & Password Sign Up
+      async function signUpWithEmail() {
+        const email = document.getElementById('email-input').value;
+        const password = document.getElementById('password-input').value;
+        messageEl.style.color = 'black';
+        messageEl.innerText = 'Creating account...';
+
+        const { data, error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+        });
+
+        if (error) {
+          messageEl.style.color = 'red';
+          messageEl.innerText = error.message;
+        } else {
+          messageEl.style.color = '#27ae60'; // Premium Emerald Green
+          messageEl.innerText = 'Success! Check your email for a confirmation link.';
+          setTimeout(() => {
+            if (typeof window.closeModal === 'function') window.closeModal();
+          }, 3000);
+        }
+      }
+
+      // 3. Email & Password Log In
+      async function loginWithEmail() {
+        const email = document.getElementById('email-input').value;
+        const password = document.getElementById('password-input').value;
+        messageEl.style.color = 'black';
+        messageEl.innerText = 'Logging in...';
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+
+        if (error) {
+          messageEl.style.color = 'red';
+          messageEl.innerText = error.message;
+        } else if (data.user) {
+          messageEl.style.color = '#27ae60'; // Premium Emerald Green
+          messageEl.innerText = 'Login successful! Redirecting...';
+          // window.location.href = '/dashboard.html';
+          setTimeout(() => {
+            if (typeof window.closeModal === 'function') window.closeModal();
+          }, 1500);
+        }
+      }
+
+      // 4. Google OAuth Log In
+      async function loginWithGoogle() {
+        messageEl.style.color = 'black';
+        messageEl.innerText = 'Redirecting to Google...';
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            // Where Google should send the user back to after they log in
+            redirectTo: window.location.origin + '/dashboard.html', 
+          },
+        });
+
+        if (error) {
+          messageEl.style.color = 'red';
+          messageEl.innerText = error.message;
+        }
+      }
+    </script>
 </body>
 </html>

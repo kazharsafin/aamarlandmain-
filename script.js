@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetAuthModal();
         }
     };
+    window.closeModal = closeModal;
 
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', closeModal);
@@ -178,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+    window.resetAuthModal = resetAuthModal;
 
     // Define Global Handlers for requested inline onclick attributes
     window.loginWithEmail = () => {
