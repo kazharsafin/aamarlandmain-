@@ -77,8 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginModal = document.getElementById('login-modal');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const passwordToggleBtn = document.getElementById('password-toggle-btn');
-    const passwordInput = document.getElementById('login-password');
-    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password-input');
     
     // Select all triggers (Log In, Start Investing, etc.)
     const loginTriggers = document.querySelectorAll('.login-trigger');
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loginModal.classList.add('active');
                 // Premium UX: auto-focus the email field on open
                 setTimeout(() => {
-                    const emailInput = document.getElementById('login-email');
+                    const emailInput = document.getElementById('email-input');
                     if (emailInput) emailInput.focus();
                 }, 200);
             }
@@ -100,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = () => {
         if (loginModal) {
             loginModal.classList.remove('active');
+            resetAuthModal();
         }
     };
 
@@ -143,15 +143,104 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mock Login Form Submission
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
+    // Helper function to show auth messages
+    const showAuthMessage = (text, type = 'error') => {
+        const messageEl = document.getElementById('auth-message');
+        if (messageEl) {
+            messageEl.textContent = text;
+            if (type === 'success') {
+                messageEl.style.color = '#27ae60'; // Premium Emerald Green
+            } else if (type === 'info') {
+                messageEl.style.color = 'var(--accent)'; // Brand Muted Gold
+            } else {
+                messageEl.style.color = '#e74c3c'; // Premium Crimson Red
+            }
+        }
+    };
+
+    // Helper to reset auth inputs and message
+    const resetAuthModal = () => {
+        const emailIn = document.getElementById('email-input');
+        const passIn = document.getElementById('password-input');
+        const messageEl = document.getElementById('auth-message');
+        
+        if (emailIn) emailIn.value = '';
+        if (passIn) passIn.value = '';
+        if (messageEl) messageEl.textContent = '';
+        
+        // Reset password toggle visibility state back to password
+        if (passIn && passwordToggleBtn) {
+            passIn.setAttribute('type', 'password');
+            const icon = passwordToggleBtn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    };
+
+    // Define Global Handlers for requested inline onclick attributes
+    window.loginWithEmail = () => {
+        const email = document.getElementById('email-input')?.value.trim();
+        const password = document.getElementById('password-input')?.value;
+
+        if (!email || !password) {
+            showAuthMessage('Please enter both email and password.');
+            return;
+        }
+
+        // Simple format check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showAuthMessage('Please enter a valid email address.');
+            return;
+        }
+
+        showAuthMessage('Signing in securely...', 'info');
+
+        // Premium UX: Short simulated delay for realistic server auth roundtrip
+        setTimeout(() => {
             alert(`Welcome back to Aamar Land! Signed in successfully as: ${email}`);
             closeModal();
-            loginForm.reset();
-        });
-    }
+        }, 800);
+    };
+
+    window.signUpWithEmail = () => {
+        const email = document.getElementById('email-input')?.value.trim();
+        const password = document.getElementById('password-input')?.value;
+
+        if (!email || !password) {
+            showAuthMessage('Please enter both email and password to sign up.');
+            return;
+        }
+
+        // Simple format check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showAuthMessage('Please enter a valid email address.');
+            return;
+        }
+
+        if (password.length < 6) {
+            showAuthMessage('Password must be at least 6 characters long.');
+            return;
+        }
+
+        showAuthMessage('Creating your investment account...', 'info');
+
+        setTimeout(() => {
+            alert(`Congratulations! Your Aamar Land investment account has been created for: ${email}\nWelcome aboard!`);
+            closeModal();
+        }, 1000);
+    };
+
+    window.loginWithGoogle = () => {
+        showAuthMessage('Connecting with Google accounts...', 'info');
+
+        setTimeout(() => {
+            alert('Successfully authenticated via Google Account!');
+            closeModal();
+        }, 800);
+    };
 });
 

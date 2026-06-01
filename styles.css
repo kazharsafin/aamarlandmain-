@@ -1628,4 +1628,24 @@ input[type="number"]:focus, select:focus {
     background-color: #20ba5a;
 }
 
+/* Premium Upgrade for Google Sign In Button and Modal Divider */
+.google-signin-btn {
+    transition: var(--transition);
+}
+
+.google-signin-btn:hover {
+    background-color: var(--secondary-bg) !important;
+    border-color: var(--primary) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.google-signin-btn:active {
+    transform: translateY(0);
+}
+
+.auth-divider span {
+    background-color: var(--white) !important;
+}
+
 
