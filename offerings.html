@@ -61,8 +61,6 @@
         })(window, document, "clarity", "script", "wr9rvnvmty");
     </script>
     
-    <!-- Supabase JS Client Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -81,8 +79,8 @@
                 <a href="index.html#about">About Us</a>
             </div>
             <div class="nav-actions">
-                <a href="#" class="btn btn-outline login-trigger">Log In</a>
-                <a href="#" class="btn btn-primary login-trigger">Start Investing</a>
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="login.html" class="btn btn-primary">Start Investing</a>
             </div>
             <div class="mobile-menu-toggle" id="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -165,141 +163,6 @@
         <i class="fab fa-whatsapp"></i>
     </a>
     
-    <!-- Login Modal Popup -->
-    <div id="login-modal" class="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
-            
-            <div class="modal-brand">
-                <img src="logo.svg" alt="Aamar Land Logo" class="modal-logo">
-                <span class="modal-brand-name">Aamar Land</span>
-            </div>
-            
-            <div id="auth-container" class="auth-container">
-                <div id="email-section">
-                    <h2 class="modal-title" style="margin-bottom: 24px;">Welcome Back</h2>
-                    
-                    <div class="form-group">
-                        <label for="email-input">Email <span class="required">*</span></label>
-                        <div class="input-container">
-                            <input type="email" id="email-input" placeholder="you@example.com" required autocomplete="email" />
-                        </div>
-                    </div>
-                    
-                    <div class="form-group" style="margin-top: 16px;">
-                        <label for="password-input">Password <span class="required">*</span></label>
-                        <div class="input-container password-container">
-                            <input type="password" id="password-input" placeholder="Your password" required autocomplete="current-password" />
-                            <button type="button" class="password-toggle-btn" id="password-toggle-btn" aria-label="Toggle password visibility">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 24px; display: flex; gap: 12px;">
-                        <button onclick="loginWithEmail()" class="btn btn-primary btn-full modal-submit-btn" style="margin-top: 0; flex: 1;">Log In</button>
-                        <button onclick="signUpWithEmail()" class="btn btn-outline btn-full modal-submit-btn" style="margin-top: 0; flex: 1; border-color: var(--primary);">Sign Up</button>
-                    </div>
-                </div>
-
-                <div class="auth-divider" style="margin: 24px 0; text-align: center; position: relative;">
-                    <span style="background: var(--white); padding: 0 16px; position: relative; z-index: 1; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;">or</span>
-                    <div style="position: absolute; top: 50%; left: 0; right: 0; border-top: 1px solid var(--neutral-gray); z-index: 0;"></div>
-                </div>
-
-                <div id="oauth-section">
-                    <button onclick="loginWithGoogle()" class="btn btn-outline btn-full google-signin-btn" style="width: 100%; padding: 12px 16px; display: flex; align-items: center; justify-content: center; gap: 10px; border-color: var(--neutral-gray); color: var(--text-primary); background: var(--white); font-weight: 600;">
-                        <svg width="18" height="18" viewBox="0 0 18 18" style="display: inline-block; vertical-align: middle;">
-                            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
-                            <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
-                            <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.488.365 2.89 1.008 4.128l2.956-2.421z" fill="#FBBC05"/>
-                            <path d="M9 3.58c1.32 0 2.508.454 3.44 1.346l2.582-2.58C13.463.896 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961l2.956 2.37C4.672 5.164 6.656 3.58 9 3.58z" fill="#EA4335"/>
-                        </svg>
-                        Sign in with Google
-                    </button>
-                </div>
-                
-                <p id="auth-message" style="color: red; margin-top: 15px; text-align: center; font-size: 0.9rem; font-weight: 500; min-height: 20px; transition: color 0.3s ease;"></p>
-            </div>
-        </div>
-    </div>
-    
     <script src="script.js"></script>
-    <script>
-      // 1. Initialize the Supabase Client
-      const supabaseUrl = 'https://your-project-id.supabase.co';
-      const supabaseKey = 'your-anon-key';
-      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-      const messageEl = document.getElementById('auth-message');
-
-      // 2. Email & Password Sign Up
-      async function signUpWithEmail() {
-        const email = document.getElementById('email-input').value;
-        const password = document.getElementById('password-input').value;
-        messageEl.style.color = 'black';
-        messageEl.innerText = 'Creating account...';
-
-        const { data, error } = await supabase.auth.signUp({
-          email: email,
-          password: password,
-        });
-
-        if (error) {
-          messageEl.style.color = 'red';
-          messageEl.innerText = error.message;
-        } else {
-          messageEl.style.color = '#27ae60'; // Premium Emerald Green
-          messageEl.innerText = 'Success! Check your email for a confirmation link.';
-          setTimeout(() => {
-            if (typeof window.closeModal === 'function') window.closeModal();
-          }, 3000);
-        }
-      }
-
-      // 3. Email & Password Log In
-      async function loginWithEmail() {
-        const email = document.getElementById('email-input').value;
-        const password = document.getElementById('password-input').value;
-        messageEl.style.color = 'black';
-        messageEl.innerText = 'Logging in...';
-
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password,
-        });
-
-        if (error) {
-          messageEl.style.color = 'red';
-          messageEl.innerText = error.message;
-        } else if (data.user) {
-          messageEl.style.color = '#27ae60'; // Premium Emerald Green
-          messageEl.innerText = 'Login successful! Redirecting...';
-          // window.location.href = '/dashboard.html';
-          setTimeout(() => {
-            if (typeof window.closeModal === 'function') window.closeModal();
-          }, 1500);
-        }
-      }
-
-      // 4. Google OAuth Log In
-      async function loginWithGoogle() {
-        messageEl.style.color = 'black';
-        messageEl.innerText = 'Redirecting to Google...';
-
-        const { data, error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            // Where Google should send the user back to after they log in
-            redirectTo: window.location.origin + '/dashboard.html', 
-          },
-        });
-
-        if (error) {
-          messageEl.style.color = 'red';
-          messageEl.innerText = error.message;
-        }
-      }
-    </script>
 </body>
 </html>
