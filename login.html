@@ -9,7 +9,8 @@
         content="Log in or create a verified account to own a piece of Bangladesh's Real Estate starting from just 1,000tk. Safe, mutation-verified, legal team verified.">
 
     <!-- Font & Stylesheets -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -22,9 +23,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        /* Specific Styles for Center-Aligned Login Card (Matching Screenshot 2) */
+        /* Specific Styles for Center-Aligned Login Card */
         body {
-            background-color: var(--secondary-bg);
+            background-color: var(--secondary-bg, #f5f5f5);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,11 +33,11 @@
             padding: 24px;
             overflow-x: hidden;
             margin: 0;
-            font-family: var(--font-main);
+            font-family: 'Inter', sans-serif;
         }
 
         .auth-card {
-            background-color: var(--white);
+            background-color: var(--white, #ffffff);
             border-radius: 16px;
             box-shadow: 0 16px 40px rgba(43, 43, 43, 0.06), 0 1px 3px rgba(43, 43, 43, 0.02);
             width: 100%;
@@ -54,6 +55,7 @@
                 opacity: 0;
                 transform: translateY(15px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -68,10 +70,10 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--text-secondary);
+            color: var(--text-secondary, #666);
             cursor: pointer;
             text-decoration: none;
-            transition: var(--transition);
+            transition: 0.3s ease;
             width: 32px;
             height: 32px;
             display: flex;
@@ -82,8 +84,8 @@
         }
 
         .close-btn:hover {
-            background-color: var(--secondary-bg);
-            color: var(--text-primary);
+            background-color: var(--secondary-bg, #eee);
+            color: var(--text-primary, #333);
             opacity: 1;
         }
 
@@ -106,7 +108,7 @@
         .brand-name {
             font-size: 1.35rem;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--primary, #1f4d3a);
             margin: 0;
             letter-spacing: -0.02em;
         }
@@ -115,7 +117,7 @@
             text-align: center;
             font-size: 1.85rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: var(--text-primary, #111);
             margin: 0 0 24px 0;
             letter-spacing: -0.03em;
         }
@@ -136,7 +138,7 @@
         .form-group label {
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-primary, #333);
             text-align: left;
         }
 
@@ -154,18 +156,19 @@
         .input-container input {
             width: 100%;
             padding: 13px 16px;
-            border: 1px solid var(--neutral-gray);
-            border-radius: var(--radius-sm);
+            border: 1px solid var(--neutral-gray, #ccc);
+            border-radius: 6px;
             font-size: 0.95rem;
-            font-family: var(--font-main);
-            color: var(--text-primary);
-            background-color: var(--white);
-            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary, #333);
+            background-color: var(--white, #fff);
+            transition: 0.3s ease;
+            box-sizing: border-box;
         }
 
         .input-container input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--primary, #1f4d3a);
             box-shadow: 0 0 0 3px rgba(31, 77, 58, 0.12);
         }
 
@@ -178,15 +181,15 @@
             right: 16px;
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: var(--text-secondary, #666);
             cursor: pointer;
             font-size: 1rem;
             padding: 4px;
-            transition: var(--transition);
+            transition: 0.3s ease;
         }
 
         .password-toggle-btn:hover {
-            color: var(--text-primary);
+            color: var(--text-primary, #333);
         }
 
         .form-utility-row {
@@ -201,28 +204,28 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-secondary);
+            color: var(--text-secondary, #666);
             cursor: pointer;
             font-weight: 500;
         }
 
         .remember-me input {
             cursor: pointer;
-            accent-color: var(--primary);
+            accent-color: var(--primary, #1f4d3a);
         }
 
         .forgot-pass {
-            color: var(--primary);
+            color: var(--primary, #1f4d3a);
             text-decoration: none;
             font-weight: 600;
-            transition: var(--transition);
+            transition: 0.3s ease;
         }
 
         .forgot-pass:hover {
-            color: var(--accent);
+            color: var(--accent, #2ecc71);
         }
 
-        /* Dual Action Button Group (Log In / Sign Up side-by-side) */
+        /* Dual Action Button Group */
         .btn-group {
             display: flex;
             gap: 12px;
@@ -234,91 +237,45 @@
             padding: 13px;
             font-size: 0.95rem;
             font-weight: 600;
-            border-radius: var(--radius-sm);
+            border-radius: 6px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.3s ease;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Active styling matching screenshot 2 green background */
+        .btn-group button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
         .btn-group button.active {
-            background-color: var(--primary);
-            color: var(--white);
-            border: 1px solid var(--primary);
+            background-color: var(--primary, #1f4d3a);
+            color: var(--white, #fff);
+            border: 1px solid var(--primary, #1f4d3a);
         }
 
-        .btn-group button.active:hover {
+        .btn-group button.active:hover:not(:disabled) {
             background-color: #173b2c;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Inactive outline styling matching screenshot 2 */
         .btn-group button.inactive {
             background-color: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
+            border: 1px solid var(--primary, #1f4d3a);
+            color: var(--primary, #1f4d3a);
         }
 
-        .btn-group button.inactive:hover {
+        .btn-group button.inactive:hover:not(:disabled) {
             background-color: rgba(31, 77, 58, 0.05);
-        }
-
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 24px 0;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(217, 214, 207, 0.7);
-        }
-
-        .divider:not(:empty)::before {
-            margin-right: 16px;
-        }
-
-        .divider:not(:empty)::after {
-            margin-left: 16px;
-        }
-
-        /* Google SSO Button matching screenshot 2 */
-        .google-btn {
-            width: 100%;
-            padding: 13px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--neutral-gray);
-            background-color: var(--white);
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .google-btn:hover {
-            background-color: var(--secondary-bg);
-            border-color: var(--primary);
         }
 
         .auth-message-box {
             margin-top: 16px;
             padding: 12px 16px;
-            border-radius: var(--radius-sm);
+            border-radius: 6px;
             font-size: 0.9rem;
             font-weight: 500;
             display: none;
@@ -342,20 +299,9 @@
 
         .auth-message-box.info {
             background-color: #fefcf6;
-            color: var(--accent);
+            color: #f39c12;
             border: 1px solid #fef3c7;
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-5px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         @media (max-width: 480px) {
@@ -372,12 +318,10 @@
 
 <body>
     <div class="auth-card">
-        <!-- Close Button pointing back to landing page -->
         <a href="index.html" class="close-btn" aria-label="Close modal">
             <i class="fas fa-times"></i>
         </a>
 
-        <!-- Centered Logo and Brand Name -->
         <div class="brand-header">
             <img src="logo.svg" alt="Aamar Land Logo" class="brand-logo">
             <h1 class="brand-name">Aamar Land</h1>
@@ -385,9 +329,7 @@
 
         <h2 class="auth-title" id="form-title-text">Welcome Back</h2>
 
-        <!-- Auth Form -->
         <form id="auth-form" class="auth-form" onsubmit="handleAuthSubmit(event)">
-            <!-- Email Input -->
             <div class="form-group">
                 <label for="email-input">Email <span class="required">*</span></label>
                 <div class="input-container">
@@ -395,18 +337,18 @@
                 </div>
             </div>
 
-            <!-- Password Input -->
             <div class="form-group">
                 <label for="password-input">Password <span class="required">*</span></label>
                 <div class="input-container password-container">
-                    <input type="password" id="password-input" placeholder="Your password" required autocomplete="current-password" />
-                    <button type="button" class="password-toggle-btn" id="password-toggle-btn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility()">
+                    <input type="password" id="password-input" placeholder="Your password" required
+                        autocomplete="current-password" />
+                    <button type="button" class="password-toggle-btn" id="password-toggle-btn"
+                        aria-label="Toggle password visibility" onclick="togglePasswordVisibility()">
                         <i class="fas fa-eye" id="password-eye-icon"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Utilities: Remember Me & Forgot Password -->
             <div class="form-utility-row" id="form-utility-row">
                 <label class="remember-me">
                     <input type="checkbox" id="remember-me-checkbox">
@@ -415,39 +357,16 @@
                 <a href="#" class="forgot-pass" onclick="handleForgotPassword(event)">Forgot Password?</a>
             </div>
 
-            <!-- Buttons side-by-side matching screenshot 2 -->
             <div class="btn-group">
                 <button type="submit" class="active" id="btn-login">Log In</button>
                 <button type="button" class="inactive" id="btn-signup" onclick="switchMode('signup')">Sign Up</button>
             </div>
         </form>
 
-        <div class="divider">or</div>
-
-        <!-- Google OAuth Button -->
-        <button onclick="loginWithGoogle()" class="google-btn" type="button">
-            <svg width="18" height="18" viewBox="0 0 18 18" style="display: inline-block; vertical-align: middle;">
-                <path
-                    d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"
-                    fill="#4285F4" />
-                <path
-                    d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"
-                    fill="#34A853" />
-                <path
-                    d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.488.365 2.89 1.008 4.128l2.956-2.421z"
-                    fill="#FBBC05" />
-                <path
-                    d="M9 3.58c1.32 0 2.508.454 3.44 1.346l2.582-2.58C13.463.896 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961l2.956 2.37C4.672 5.164 6.656 3.58 9 3.58z"
-                    fill="#EA4335" />
-            </svg>
-            <span>Sign in with Google</span>
-        </button>
-
         <div id="auth-message" class="auth-message-box"></div>
     </div>
 
     <script>
-        // Initialize Supabase Client using production keys
         const supabaseUrl = 'https://bycshqlekdibnxsltujl.supabase.co';
         const supabaseKey = 'sb_publishable_TiABEf4jCrHOreOFTunaSg_ObakFHbI';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -459,29 +378,30 @@
         const signupBtn = document.getElementById('btn-signup');
         const utilityRow = document.getElementById('form-utility-row');
 
-        // Autofocus email on load
-        window.addEventListener('DOMContentLoaded', () => {
+        // Check if user is ALREADY logged in when they open the page
+        window.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('email-input').focus();
+
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                // User is already logged in, redirect them directly to the app
+                window.location.href = 'index.html';
+            }
         });
 
-        // Toggle Switcher Mode (Login vs Sign Up)
         function switchMode(mode) {
             currentMode = mode;
             const passwordInput = document.getElementById('password-input');
-
-            // Reset any display alert messages
             messageEl.style.display = 'none';
             messageEl.className = 'auth-message-box';
 
             if (mode === 'login') {
                 formTitle.innerText = 'Welcome Back';
-                
-                // Set Log In button as active (filled) and form-submitting
+
                 loginBtn.className = 'active';
                 loginBtn.type = 'submit';
-                loginBtn.setAttribute('onclick', ''); // Clear onclick so it submits standard form
+                loginBtn.setAttribute('onclick', '');
 
-                // Set Sign Up button as inactive (outlined) and mode-switching
                 signupBtn.className = 'inactive';
                 signupBtn.type = 'button';
                 signupBtn.setAttribute('onclick', "switchMode('signup')");
@@ -491,22 +411,19 @@
             } else {
                 formTitle.innerText = 'Create an Account';
 
-                // Set Log In button as inactive (outlined) and mode-switching
                 loginBtn.className = 'inactive';
                 loginBtn.type = 'button';
                 loginBtn.setAttribute('onclick', "switchMode('login')");
 
-                // Set Sign Up button as active (filled) and form-submitting
                 signupBtn.className = 'active';
                 signupBtn.type = 'submit';
-                signupBtn.setAttribute('onclick', ''); // Clear onclick so it submits standard form
+                signupBtn.setAttribute('onclick', '');
 
                 utilityRow.style.display = 'none';
                 passwordInput.setAttribute('autocomplete', 'new-password');
             }
         }
 
-        // Toggle password character visibility
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById('password-input');
             const eyeIcon = document.getElementById('password-eye-icon');
@@ -522,28 +439,30 @@
             }
         }
 
-        // Show alerts dynamically
         function showAlert(text, type = 'error') {
             messageEl.textContent = text;
             messageEl.style.display = 'block';
             messageEl.className = `auth-message-box ${type}`;
         }
 
-        // Form Submit Handler
+        // Helper to disable buttons while processing so user can't double-click
+        function setProcessingState(isProcessing) {
+            const emailInput = document.getElementById('email-input');
+            const passwordInput = document.getElementById('password-input');
+
+            emailInput.disabled = isProcessing;
+            passwordInput.disabled = isProcessing;
+            loginBtn.disabled = isProcessing;
+            signupBtn.disabled = isProcessing;
+        }
+
         async function handleAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('email-input').value.trim();
             const password = document.getElementById('password-input').value;
 
-            // Form validation
             if (!email || !password) {
                 showAlert('Please fill in all required fields.', 'error');
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showAlert('Please enter a valid email address.', 'error');
                 return;
             }
 
@@ -552,9 +471,11 @@
                 return;
             }
 
+            setProcessingState(true); // Disable inputs
+
             if (currentMode === 'login') {
                 showAlert('Logging in securely...', 'info');
-                
+
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password,
@@ -562,11 +483,10 @@
 
                 if (error) {
                     showAlert(error.message, 'error');
+                    setProcessingState(false);
                 } else if (data.user) {
-                    showAlert('Success! Welcome back to Aamar Land. Redirecting...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1200);
+                    showAlert('Success! Redirecting...', 'success');
+                    window.location.href = 'index.html'; // Redirect on success
                 }
             } else {
                 showAlert('Creating your account...', 'info');
@@ -578,43 +498,42 @@
 
                 if (error) {
                     showAlert(error.message, 'error');
+                    setProcessingState(false);
                 } else {
-                    showAlert('Registration successful! Please check your email for a confirmation link.', 'success');
-                    // Reset inputs
-                    document.getElementById('email-input').value = '';
-                    document.getElementById('password-input').value = '';
+                    showAlert('Registration successful! Please check your email to verify your account.', 'success');
+                    document.getElementById('password-input').value = ''; // Clear password for safety
+                    setProcessingState(false);
+
+                    // Switch back to login mode so they can login once verified
+                    setTimeout(() => switchMode('login'), 3000);
                 }
             }
         }
 
-        // Google OAuth Sign In
-        async function loginWithGoogle() {
-            showAlert('Connecting to Google accounts...', 'info');
+        // Real Supabase Password Reset Logic
+        async function handleForgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value.trim();
 
-            const { data, error } = await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: window.location.origin + '/index.html'
-                }
+            if (!email) {
+                showAlert('Please enter your email address in the field above to reset your password.', 'error');
+                return;
+            }
+
+            showAlert('Sending password reset instructions...', 'info');
+            setProcessingState(true);
+
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + '/index.html', // Where to send them from the email link
             });
 
             if (error) {
                 showAlert(error.message, 'error');
+            } else {
+                showAlert(`Password reset link sent to ${email}.`, 'success');
             }
-        }
 
-        // Forgot password utility
-        function handleForgotPassword(e) {
-            e.preventDefault();
-            const email = document.getElementById('email-input').value.trim();
-            if (!email) {
-                showAlert('Please enter your email address to reset your password.', 'error');
-                return;
-            }
-            showAlert('Sending password reset instructions to your email...', 'info');
-            setTimeout(() => {
-                showAlert(`If an account exists for ${email}, a password reset link has been sent.`, 'success');
-            }, 1000);
+            setProcessingState(false);
         }
     </script>
 </body>
