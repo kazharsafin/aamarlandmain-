@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aamar Land | Profile</title>
+    <!-- Font & Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    
+    <style>
+        /* Specific profile page styles */
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding-top: 120px;
+            padding-bottom: 80px;
+            min-height: 80vh;
+        }
+
+        .profile-sidebar {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 24px 0;
+            border: 1px solid var(--secondary-bg);
+            height: fit-content;
+        }
+
+        .sidebar-user {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--secondary-bg);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-bg);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #1a73e8;
+            color: var(--white);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border: 2px solid var(--white);
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu-item.active a {
+            background: #f4f7fb;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        .sidebar-menu-item a:hover:not(.active a) {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        .sidebar-menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .profile-content {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 40px;
+            border: 1px solid var(--secondary-bg);
+        }
+
+        .profile-content h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        .profile-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-group input:read-only {
+            background-color: #f9f9f9;
+            color: #555;
+            border-color: #e0e0e0;
+        }
+
+        .phone-input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .phone-input-group:focus-within {
+            border-color: var(--primary);
+        }
+
+        .country-code {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #f9f9f9;
+            border-right: 1px solid #e0e0e0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .phone-input-group input {
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            flex-grow: 1;
+        }
+
+        .phone-input-group input:focus {
+            box-shadow: none;
+        }
+
+        .btn-save {
+            margin-top: 32px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-save button {
+            background-color: #1a73e8; /* Blue like in the image */
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-main);
+        }
+
+        .btn-save button:hover {
+            background-color: #1557b0;
+        }
+
+        .contact-info-section {
+            margin-top: 40px;
+        }
+
+        .contact-info-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .change-email-link {
+            font-size: 0.8rem;
+            color: #1a73e8;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+            .profile-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo-container">
+                <img src="logo.svg" alt="Aamar Land Logo" class="logo-img-new">
+                <div class="logo-text">
+                    <span>Aamar</span>
+                    <span>Land</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html#how-it-works">How It Works</a>
+                <a href="offerings.html">Offerings</a>
+                <a href="index.html#about">About Us</a>
+            </div>
+            <div class="nav-actions" id="nav-actions-container">
+                <a href="login1.html" class="btn btn-outline" id="nav-login-btn">Log In</a>
+                <a href="login1.html" class="btn btn-primary" id="nav-invest-btn">Start Investing</a>
+                
+                <!-- User Profile Dropdown -->
+                <div class="user-profile-container hidden" id="nav-user-profile">
+                    <button class="user-avatar-btn" id="user-avatar-btn">
+                        <span id="user-initials">KA</span>
+                    </button>
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="dropdown-header">
+                            <div class="user-avatar-large">
+                                <span id="dropdown-initials">KA</span>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name" id="dropdown-name">User Name</div>
+                                <div class="user-email" id="dropdown-email">user@email.com</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-section">Account</div>
+                        <a href="profile.html" class="dropdown-item"><i class="far fa-user"></i> Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" id="nav-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Layout -->
+    <div class="container profile-layout">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+            <div class="sidebar-user">
+                <div class="sidebar-avatar">
+                    <span id="sidebar-initials">KA</span>
+                    <div class="avatar-edit-btn">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <a href="profile.html"><i class="far fa-user"></i> Profile</a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#"><i class="fas fa-gift"></i> Manage Gifts</a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#"><i class="fas fa-user-friends"></i> Referrals</a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#"><i class="fas fa-file-invoice"></i> Nominee Information</a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#"><i class="far fa-file-alt"></i> Documents</a>
+                </li>
+                <li class="sidebar-menu-item" style="margin-top: 16px;">
+                    <a href="#" id="sidebar-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="profile-content">
+            <h2>Profile Information</h2>
+            <form id="profile-form">
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label>First Name <i class="fas fa-info-circle" style="color: #ccc; margin-left: 4px;"></i></label>
+                        <input type="text" id="profile-first-name" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <i class="fas fa-info-circle" style="color: #ccc; margin-left: 4px;"></i></label>
+                        <input type="text" id="profile-last-name" placeholder="Last Name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>NID number <i class="fas fa-info-circle" style="color: #ccc; margin-left: 4px;"></i></label>
+                        <input type="text" placeholder="Please enter your NID number">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of birth</label>
+                        <input type="date" placeholder="dd/mm/yyyy">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Phone number <i class="fas fa-info-circle" style="color: #ccc; margin-left: 4px;"></i></label>
+                        <div class="phone-input-group">
+                            <div class="country-code">
+                                <img src="https://flagcdn.com/w20/bd.png" alt="BD Flag" width="20"> +880
+                            </div>
+                            <input type="tel" id="profile-phone" placeholder="17X XXX XXXX">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label>District / State / Region</label>
+                        <input type="text" placeholder="District or state">
+                    </div>
+
+                    <div class="form-group">
+                        <label>ZIP Code</label>
+                        <input type="text" placeholder="ZIP or postal code">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select>
+                            <option value="Bangladesh" selected>Bangladesh</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Address</label>
+                        <textarea rows="3" placeholder="House, road no."></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-save">
+                    <button type="button">Save</button>
+                </div>
+
+                <div class="contact-info-section">
+                    <h3>Contact Information</h3>
+                    <div class="form-group full-width">
+                        <label>Email Address <span style="color: #e74c3c;">*</span></label>
+                        <input type="email" id="profile-email-input" readonly>
+                        <a href="#" class="change-email-link">Click here to change email address</a>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: auto;">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-container" style="margin-bottom: 24px;">
+                        <img src="logo.svg" alt="Aamar Land Logo" class="logo-img-new">
+                        <div class="logo-text" style="color: var(--white);">
+                            <span>Aamar</span>
+                            <span>Land</span>
+                        </div>
+                    </a>
+                    <p>A smarter and safer way for middle-class Bangladeshis to build long-term wealth through land ownership.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Level 4, Aamar Land Tower, Banani, Dhaka</p>
+                    <p><i class="fas fa-phone"></i> 01572926230</p>
+                    <p><i class="fas fa-envelope"></i> aamarland.support@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Aamar Land Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+        const SUPABASE_URL = 'https://bycshqlekdibnxsltujl.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_TiABEf4jCrHOreOFTunaSg_ObakFHbI';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const navLoginBtn = document.getElementById('nav-login-btn');
+        const navUserProfile = document.getElementById('nav-user-profile');
+        const userInitials = document.getElementById('user-initials');
+        const dropdownInitials = document.getElementById('dropdown-initials');
+        const dropdownName = document.getElementById('dropdown-name');
+        const dropdownEmail = document.getElementById('dropdown-email');
+        const navLogoutBtn = document.getElementById('nav-logout-btn');
+        const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+        const userAvatarBtn = document.getElementById('user-avatar-btn');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+        // Profile Form Fields
+        const profileFirstName = document.getElementById('profile-first-name');
+        const profileLastName = document.getElementById('profile-last-name');
+        const profilePhone = document.getElementById('profile-phone');
+        const profileEmailInput = document.getElementById('profile-email-input');
+        const sidebarInitials = document.getElementById('sidebar-initials');
+
+        // Toggle dropdown
+        if (userAvatarBtn) {
+            userAvatarBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdownMenu.classList.toggle('active');
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navUserProfile && !navUserProfile.contains(e.target)) {
+                userDropdownMenu.classList.remove('active');
+            }
+        });
+
+        // Logout logic
+        const handleLogout = async (e) => {
+            e.preventDefault();
+            await supabase.auth.signOut();
+            window.location.href = 'index.html';
+        };
+        if(navLogoutBtn) navLogoutBtn.addEventListener('click', handleLogout);
+        if(sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
+
+        function getInitials(name) {
+            if (!name) return 'U';
+            const parts = name.split(' ').filter(n => n.length > 0);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Check Auth State
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                if(navLoginBtn) navLoginBtn.style.display = 'none';
+                if(navUserProfile) navUserProfile.classList.remove('hidden');
+                
+                const fullName = session.user.user_metadata?.full_name || '';
+                let firstName = '';
+                let lastName = '';
+                
+                if (fullName) {
+                    const nameParts = fullName.split(' ');
+                    firstName = nameParts[0];
+                    lastName = nameParts.slice(1).join(' ');
+                } else {
+                    firstName = session.user.email.split('@')[0];
+                }
+
+                const email = session.user.email;
+                const phone = session.user.user_metadata?.phone_number || '';
+                const initials = getInitials(fullName || firstName);
+
+                // Update Navbar
+                if(userInitials) userInitials.textContent = initials;
+                if(dropdownInitials) dropdownInitials.textContent = initials;
+                if(dropdownName) dropdownName.textContent = fullName || firstName;
+                if(dropdownEmail) dropdownEmail.textContent = email;
+
+                // Update Profile Page Data
+                if(sidebarInitials) sidebarInitials.textContent = initials;
+                if(profileFirstName) profileFirstName.value = firstName;
+                if(profileLastName) profileLastName.value = lastName;
+                
+                if(profilePhone && phone) {
+                    let localPhone = phone;
+                    if(phone.startsWith('+880')) {
+                        localPhone = phone.substring(4).trim();
+                    }
+                    profilePhone.value = localPhone;
+                }
+                
+                if(profileEmailInput) profileEmailInput.value = email;
+
+            } else {
+                // If not logged in on profile page, redirect to login
+                window.location.href = 'login1.html';
+            }
+        });
+    </script>
+</body>
+</html>

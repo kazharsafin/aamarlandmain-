@@ -1663,7 +1663,7 @@ input[type="number"]:focus, select:focus {
     height: 44px;
     border-radius: 50%;
     background-color: #f4f7fb;
-    color: #1a73e8;
+    color: var(--primary);
     border: none;
     font-size: 1.1rem;
     font-weight: 600;
@@ -1713,7 +1713,7 @@ input[type="number"]:focus, select:focus {
     height: 52px;
     border-radius: 50%;
     background-color: #f4f7fb;
-    color: #1a73e8;
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
