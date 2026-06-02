@@ -306,22 +306,8 @@
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
 
-        // Get the user's name from Google or their manual profile
-        const userName = session.user.user_metadata.full_name || session.user.email;
-
-        // Hide the login/signup cards and show a success message!
-        const mainBg = document.getElementById('main-background');
-        mainBg.innerHTML = `
-          <div class="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
-          <div class="bg-white rounded-[24px] shadow-2xl px-12 py-16 relative z-10 text-center max-w-md w-full mx-4">
-            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="text-green-600 w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome In!</h2>
-            <p class="text-gray-600 font-medium text-lg mb-8">${userName}</p>
-            <button onclick="window.location.reload()" class="bg-[#1B4E3B] text-white px-8 py-3 rounded-xl font-medium hover:bg-[#133829] transition-colors w-full">Sign Out (Test Refresh)</button>
-          </div>
-        `;
+        // Redirect the user to the home page directly
+        window.location.href = 'index.html';
       }
     });
   </script>

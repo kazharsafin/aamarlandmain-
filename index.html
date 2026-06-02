@@ -84,8 +84,34 @@
                 <a href="index.html#about">About Us</a>
             </div>
             <div class="nav-actions">
-                <a href="login1.html" class="btn btn-outline">Log In</a>
-                <a href="login1.html" class="btn btn-primary">Start Investing</a>
+                <a href="login1.html" class="btn btn-outline" id="nav-login-btn">Log In</a>
+                <a href="login1.html" class="btn btn-primary" id="nav-invest-btn">Start Investing</a>
+
+                <!-- User Profile Dropdown (Hidden by default) -->
+                <div class="user-profile-container hidden" id="nav-user-profile">
+                    <button class="user-avatar-btn" id="user-avatar-btn">
+                        <span id="user-initials">KA</span>
+                    </button>
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="dropdown-header">
+                            <div class="user-avatar-large">
+                                <span id="dropdown-initials">KA</span>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name" id="dropdown-name">Kazi Azhar</div>
+                                <div class="user-email" id="dropdown-email">kazharsafin@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-section">Account</div>
+                        <a href="#" class="dropdown-item"><i class="far fa-user"></i> Profile</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-hand-holding-usd"></i> Jomee Jomaa
+                            balance</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" id="nav-logout-btn"><i
+                                class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
             </div>
             <div class="mobile-menu-toggle" id="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -409,6 +435,70 @@
     </a>
 
     <script src="script.js"></script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+        const SUPABASE_URL = 'https://bycshqlekdibnxsltujl.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_TiABEf4jCrHOreOFTunaSg_ObakFHbI';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const navLoginBtn = document.getElementById('nav-login-btn');
+        const navUserProfile = document.getElementById('nav-user-profile');
+        const userInitials = document.getElementById('user-initials');
+        const dropdownInitials = document.getElementById('dropdown-initials');
+        const dropdownName = document.getElementById('dropdown-name');
+        const dropdownEmail = document.getElementById('dropdown-email');
+        const navLogoutBtn = document.getElementById('nav-logout-btn');
+        const userAvatarBtn = document.getElementById('user-avatar-btn');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+        // Toggle dropdown
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdownMenu.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navUserProfile.contains(e.target)) {
+                userDropdownMenu.classList.remove('active');
+            }
+        });
+
+        // Logout
+        navLogoutBtn.addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.reload();
+        });
+
+        function getInitials(name) {
+            if (!name) return 'U';
+            const parts = name.split(' ').filter(n => n.length > 0);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Check Auth State
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                navLoginBtn.style.display = 'none';
+                navUserProfile.classList.remove('hidden');
+
+                const name = session.user.user_metadata?.full_name || session.user.email.split('@')[0];
+                const email = session.user.email;
+                const initials = getInitials(name);
+
+                userInitials.textContent = initials;
+                dropdownInitials.textContent = initials;
+                dropdownName.textContent = name;
+                dropdownEmail.textContent = email;
+            } else {
+                navLoginBtn.style.display = 'inline-flex';
+                navUserProfile.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 
 </html>
